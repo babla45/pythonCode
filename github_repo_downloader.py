@@ -28,7 +28,7 @@ import sys
 import time
 
 def get_github_username(github_url):
-    """Extract GitHub username from the provided URL."""
+    # """Extract GitHub username from the provided URL."""
     if github_url.startswith("https://github.com/"):
         return github_url.split("https://github.com/")[1].split('/')[0]
     else:
@@ -36,8 +36,9 @@ def get_github_username(github_url):
         sys.exit(1)
 
 def get_all_repos(username):
-    """Fetch all repositories for a given GitHub username using the GitHub API."""
+    # """Fetch all repositories for a given GitHub username using the GitHub API."""
     api_url = f"https://api.github.com/users/{username}/repos"
+    # list of dictionaries
     repos = []
     page = 1
     
@@ -57,7 +58,7 @@ def get_all_repos(username):
     return repos
 
 def clone_or_update_repos(repos, github_username):
-    """Clone new repositories or update existing ones."""
+    # """Clone new repositories or update existing ones."""
     folder_name = f"github_repos_of_{github_username}"
     os.makedirs(folder_name, exist_ok=True)
 
@@ -76,7 +77,7 @@ def clone_or_update_repos(repos, github_username):
             subprocess.run(['git', 'clone', repo_url], cwd=folder_name, check=True)
 
 def main():
-    """Main function to manage the GitHub repo cloning or updating."""
+    # """Main function to manage the GitHub repo cloning or updating."""
     github_url = input("Enter the GitHub profile URL (e.g., https://github.com/username): ").strip()
     github_username = get_github_username(github_url)
     
@@ -87,7 +88,7 @@ def main():
         print("No repositories found for this user.")
         sys.exit(0)
     
-    print(f"Found {len(repos)} repositories. Starting download or update...")
+    print(f"\n\nFound {len(repos)} repositories. Starting download or update...")
     
     # Clone or update repositories
     clone_or_update_repos(repos, github_username)
